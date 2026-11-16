@@ -30,10 +30,15 @@ public class CatTest {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(felineMock.eatMeat()).thenReturn(expectedFood);
         Cat cat = new Cat(felineMock);
-
         List<String> actualFood = cat.getFood();
-
         assertEquals(expectedFood, actualFood);
+
+    }
+
+    @Test
+    public void getFoodCallsEatMeatOnce() throws Exception {
+        Cat cat = new Cat(felineMock);
+        cat.getFood();
         Mockito.verify(felineMock, Mockito.times(1)).eatMeat();
     }
 }

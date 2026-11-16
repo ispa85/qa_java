@@ -43,20 +43,36 @@ public class LionTest {
     public void getKittensReturnsValueFromPredator() throws Exception {
         when(predatorMock.getKittens()).thenReturn(5);
         Lion lion = new Lion("Самка", predatorMock);
-
         assertEquals(5, lion.getKittens());
-        Mockito.verify(predatorMock, Mockito.times(1)).getKittens();
+
     }
 
     @Test
-    public void getFoodReturnsFoodFromPredator() throws Exception {
+    public void getKittensCalledOnce() throws Exception {
+
+        Lion lion = new Lion("Самец",predatorMock);
+        lion.getKittens();
+        Mockito.verify(predatorMock, Mockito.times(1)).getKittens();
+
+    }
+
+
+
+    @Test
+    public void getFoodReturnsFoodListFromPredator() throws Exception {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         when(predatorMock.eatMeat()).thenReturn(expectedFood);
         Lion lion = new Lion("Самец", predatorMock);
-
         List<String> actualFood = lion.getFood();
-
         assertEquals(expectedFood, actualFood);
+
+    }
+
+    @Test
+    public void getFoodCallsEatMeatOnce () throws Exception {
+        Lion lion = new Lion("Самец",predatorMock);
+        lion.getFood();
         Mockito.verify(predatorMock, Mockito.times(1)).eatMeat();
+
     }
 }
